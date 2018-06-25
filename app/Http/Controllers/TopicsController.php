@@ -23,8 +23,12 @@ class TopicsController extends Controller
 	}
 
 	//展示帖子详细页面
-    public function show(Topic $topic)
+    public function show(Topic $topic,Request $request)
     {
+        // URL 矫正
+        if ( ! empty($topic->slug) && $topic->slug != $request->slug) {
+            return redirect($topic->link(), 301);
+        }
         return view('topics.show', compact('topic'));
     }
 
